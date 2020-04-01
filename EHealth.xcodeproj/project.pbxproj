@@ -17,6 +17,16 @@
 		FCA7043924336520000B4454 /* EHealthTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA7043824336520000B4454 /* EHealthTests.swift */; };
 		FCA7044624336651000B4454 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA7044524336651000B4454 /* LoginController.swift */; };
 		FCA7044C24336918000B4454 /* BaseUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA7044B24336918000B4454 /* BaseUI.swift */; };
+		FCA7045424336D24000B4454 /* Oswald-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FCA7044F24336D20000B4454 /* Oswald-Bold.ttf */; };
+		FCA7045524336D24000B4454 /* Oswald-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FCA7045024336D20000B4454 /* Oswald-ExtraLight.ttf */; };
+		FCA7045624336D24000B4454 /* Oswald-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FCA7044E24336D1F000B4454 /* Oswald-Light.ttf */; };
+		FCA7045724336D24000B4454 /* Oswald-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FCA7045124336D20000B4454 /* Oswald-Medium.ttf */; };
+		FCA7045824336D24000B4454 /* Oswald-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FCA7045224336D20000B4454 /* Oswald-Regular.ttf */; };
+		FCA7045924336D24000B4454 /* Oswald-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FCA7045324336D20000B4454 /* Oswald-SemiBold.ttf */; };
+		FCA7045B2433719E000B4454 /* UnderlinedField.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA7045A2433719E000B4454 /* UnderlinedField.swift */; };
+		FCA7045D24337979000B4454 /* UIImage+Scale.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA7045C24337979000B4454 /* UIImage+Scale.swift */; };
+		FCA7045F24337ECB000B4454 /* UIViewController+HideKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA7045E24337ECB000B4454 /* UIViewController+HideKeyboard.swift */; };
+		FCA7046124338104000B4454 /* DoctorHomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA7046024338104000B4454 /* DoctorHomeController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +57,16 @@
 		FCA7043A24336520000B4454 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FCA7044524336651000B4454 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		FCA7044B24336918000B4454 /* BaseUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseUI.swift; sourceTree = "<group>"; };
+		FCA7044E24336D1F000B4454 /* Oswald-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Oswald-Light.ttf"; sourceTree = "<group>"; };
+		FCA7044F24336D20000B4454 /* Oswald-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Oswald-Bold.ttf"; sourceTree = "<group>"; };
+		FCA7045024336D20000B4454 /* Oswald-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Oswald-ExtraLight.ttf"; sourceTree = "<group>"; };
+		FCA7045124336D20000B4454 /* Oswald-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Oswald-Medium.ttf"; sourceTree = "<group>"; };
+		FCA7045224336D20000B4454 /* Oswald-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Oswald-Regular.ttf"; sourceTree = "<group>"; };
+		FCA7045324336D20000B4454 /* Oswald-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Oswald-SemiBold.ttf"; sourceTree = "<group>"; };
+		FCA7045A2433719E000B4454 /* UnderlinedField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderlinedField.swift; sourceTree = "<group>"; };
+		FCA7045C24337979000B4454 /* UIImage+Scale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Scale.swift"; sourceTree = "<group>"; };
+		FCA7045E24337ECB000B4454 /* UIViewController+HideKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+HideKeyboard.swift"; sourceTree = "<group>"; };
+		FCA7046024338104000B4454 /* DoctorHomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoctorHomeController.swift; sourceTree = "<group>"; };
 		FCA7EC38B63FA96F376A0151 /* Pods_EHealthTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EHealthTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -123,6 +143,7 @@
 				FCA7042A24336520000B4454 /* Assets.xcassets */,
 				FCA7042C24336520000B4454 /* LaunchScreen.storyboard */,
 				FCA7042F24336520000B4454 /* Info.plist */,
+				FCA7044D24336D0A000B4454 /* Fonts */,
 			);
 			path = EHealth;
 			sourceTree = "<group>";
@@ -149,6 +170,7 @@
 			isa = PBXGroup;
 			children = (
 				FCA7044524336651000B4454 /* LoginController.swift */,
+				FCA7046024338104000B4454 /* DoctorHomeController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -157,6 +179,7 @@
 			isa = PBXGroup;
 			children = (
 				FCA7044B24336918000B4454 /* BaseUI.swift */,
+				FCA7045A2433719E000B4454 /* UnderlinedField.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -171,6 +194,8 @@
 		FCA70449243368FF000B4454 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				FCA7045C24337979000B4454 /* UIImage+Scale.swift */,
+				FCA7045E24337ECB000B4454 /* UIViewController+HideKeyboard.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -180,6 +205,19 @@
 			children = (
 			);
 			path = Utilities;
+			sourceTree = "<group>";
+		};
+		FCA7044D24336D0A000B4454 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				FCA7044F24336D20000B4454 /* Oswald-Bold.ttf */,
+				FCA7045024336D20000B4454 /* Oswald-ExtraLight.ttf */,
+				FCA7044E24336D1F000B4454 /* Oswald-Light.ttf */,
+				FCA7045124336D20000B4454 /* Oswald-Medium.ttf */,
+				FCA7045224336D20000B4454 /* Oswald-Regular.ttf */,
+				FCA7045324336D20000B4454 /* Oswald-SemiBold.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -267,8 +305,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				FCA7042E24336520000B4454 /* LaunchScreen.storyboard in Resources */,
+				FCA7045524336D24000B4454 /* Oswald-ExtraLight.ttf in Resources */,
 				FCA7042B24336520000B4454 /* Assets.xcassets in Resources */,
+				FCA7045724336D24000B4454 /* Oswald-Medium.ttf in Resources */,
+				FCA7045924336D24000B4454 /* Oswald-SemiBold.ttf in Resources */,
+				FCA7045624336D24000B4454 /* Oswald-Light.ttf in Resources */,
 				FCA704292433651C000B4454 /* Main.storyboard in Resources */,
+				FCA7045424336D24000B4454 /* Oswald-Bold.ttf in Resources */,
+				FCA7045824336D24000B4454 /* Oswald-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -353,7 +397,11 @@
 				FCA7044C24336918000B4454 /* BaseUI.swift in Sources */,
 				FCA704222433651C000B4454 /* AppDelegate.swift in Sources */,
 				FCA7044624336651000B4454 /* LoginController.swift in Sources */,
+				FCA7045F24337ECB000B4454 /* UIViewController+HideKeyboard.swift in Sources */,
 				FCA704242433651C000B4454 /* SceneDelegate.swift in Sources */,
+				FCA7046124338104000B4454 /* DoctorHomeController.swift in Sources */,
+				FCA7045B2433719E000B4454 /* UnderlinedField.swift in Sources */,
+				FCA7045D24337979000B4454 /* UIImage+Scale.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
