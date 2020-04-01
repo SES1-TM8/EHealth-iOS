@@ -45,7 +45,7 @@ class DoctorPatientListController: UIViewController, UITableViewDelegate, UITabl
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        self.patients = [Patient(id: 0, name: "Joy Liu", phoneNumber: "999", email: "test@test.com", address: ""), Patient(id: 0, name: "Shane Rodrigues", phoneNumber: "999", email: "test@test.com", address: ""), Patient(id: 0, name: "Sally Wang", phoneNumber: "999", email: "test@test.com", address: ""), Patient(id: 0, name: "Ahmed Kursheed", phoneNumber: "999", email: "test@test.com", address: ""), Patient(id: 0, name: "Jon McLean", phoneNumber: "999", email: "test@test.com", address: "")]
+        self.patients = [Patient(id: 0, name: "Joy Liu", phoneNumber: "999", email: "test@test.com", address: "", dateOfBirth: "12/05/2000", medicareNumber: "AAAAAAAAAA", concessionType: .generic, concessionCardNumber: "AAAAAA"), Patient(id: 1, name: "Shane Rodrigues", phoneNumber: "999", email: "test@test.com", address: "", dateOfBirth: "12/03/2000", medicareNumber: "AAAAAA", concessionType: .none, concessionCardNumber: ""), Patient(id: 2, name: "Ahmed Kursheed", phoneNumber: "999", email: "test@test.com", address: "", dateOfBirth: "31/03/1999", medicareNumber: "AAAAAAAA", concessionType: .none, concessionCardNumber: ""), Patient(id: 3, name: "Zihao Cui", phoneNumber: "999", email: "test@test.com", address: "", dateOfBirth: "21/01/1997", medicareNumber: "AAAAAAAAAA", concessionType: .none, concessionCardNumber: ""), Patient(id: 4, name: "Jon McLean", phoneNumber: "0435882119", email: "jon@mclean.one", address: "30 Letters Street, Evatt ACT 2617", dateOfBirth: "27/10/1999", medicareNumber: "AAAAAAAAAAA", concessionType: .none, concessionCardNumber: "")]
         
     }
     
@@ -89,6 +89,8 @@ class DoctorPatientListController: UIViewController, UITableViewDelegate, UITabl
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        let vc = DoctorPatientTabController(doctor: self.doctor, patient: self.patients[indexPath.row])
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
 }

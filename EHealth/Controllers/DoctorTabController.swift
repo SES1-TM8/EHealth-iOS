@@ -24,6 +24,8 @@ class DoctorTabController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.tabBar.barTintColor = Theme.background
+        
         let homeController = DoctorHomeController(doctor: self.doctor)
         homeController.tabBarItem = UITabBarItem(title: "Home", image: UIImage(named: "home")!, tag: 1)
         
