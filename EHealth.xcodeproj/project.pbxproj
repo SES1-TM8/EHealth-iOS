@@ -40,6 +40,9 @@
 		FCE0C1D02434CD1300D6206C /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE0C1CF2434CD1300D6206C /* InfoView.swift */; };
 		FCE0C1D22434D3D200D6206C /* DoctorPatientTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE0C1D12434D3D200D6206C /* DoctorPatientTabController.swift */; };
 		FCE0C1D42434D4F700D6206C /* DoctorPatientMedicationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE0C1D32434D4F700D6206C /* DoctorPatientMedicationsController.swift */; };
+		FCE0C1D62434D93700D6206C /* Medication.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE0C1D52434D93700D6206C /* Medication.swift */; };
+		FCE0C1D82434DB1800D6206C /* Prescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE0C1D72434DB1700D6206C /* Prescription.swift */; };
+		FCE0C1DA2434DDFF00D6206C /* PrescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE0C1D92434DDFF00D6206C /* PrescriptionCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -94,6 +97,9 @@
 		FCE0C1CF2434CD1300D6206C /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		FCE0C1D12434D3D200D6206C /* DoctorPatientTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoctorPatientTabController.swift; sourceTree = "<group>"; };
 		FCE0C1D32434D4F700D6206C /* DoctorPatientMedicationsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoctorPatientMedicationsController.swift; sourceTree = "<group>"; };
+		FCE0C1D52434D93700D6206C /* Medication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Medication.swift; sourceTree = "<group>"; };
+		FCE0C1D72434DB1700D6206C /* Prescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prescription.swift; sourceTree = "<group>"; };
+		FCE0C1D92434DDFF00D6206C /* PrescriptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrescriptionCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -210,6 +216,7 @@
 				FCE0C1BB2434951C00D6206C /* InitialsCircle.swift */,
 				FCE0C1CB2434AFEF00D6206C /* PatientCell.swift */,
 				FCE0C1CF2434CD1300D6206C /* InfoView.swift */,
+				FCE0C1D92434DDFF00D6206C /* PrescriptionCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -220,6 +227,8 @@
 				FCE0C1BD243499FB00D6206C /* Patient.swift */,
 				FCE0C1BF24349A5E00D6206C /* Doctor.swift */,
 				FCE0C1C124349ADD00D6206C /* Appointment.swift */,
+				FCE0C1D52434D93700D6206C /* Medication.swift */,
+				FCE0C1D72434DB1700D6206C /* Prescription.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -444,7 +453,9 @@
 				FCE0C1C224349ADD00D6206C /* Appointment.swift in Sources */,
 				FCE0C1BC2434951C00D6206C /* InitialsCircle.swift in Sources */,
 				FCE0C1C424349CE500D6206C /* DoctorTabController.swift in Sources */,
+				FCE0C1D82434DB1800D6206C /* Prescription.swift in Sources */,
 				FCA7044C24336918000B4454 /* BaseUI.swift in Sources */,
+				FCE0C1D62434D93700D6206C /* Medication.swift in Sources */,
 				FCE0C1CA2434AC1D00D6206C /* DoctorPatientListController.swift in Sources */,
 				FCE0C1C024349A5E00D6206C /* Doctor.swift in Sources */,
 				FCE0C1D02434CD1300D6206C /* InfoView.swift in Sources */,
@@ -458,6 +469,7 @@
 				FCE0C1CE2434B25500D6206C /* DoctorPatientController.swift in Sources */,
 				FCA7045B2433719E000B4454 /* UnderlinedField.swift in Sources */,
 				FCE0C1CC2434AFEF00D6206C /* PatientCell.swift in Sources */,
+				FCE0C1DA2434DDFF00D6206C /* PrescriptionCell.swift in Sources */,
 				FCE0C1D42434D4F700D6206C /* DoctorPatientMedicationsController.swift in Sources */,
 				FCE0C1BA243494B800D6206C /* AppointmentCell.swift in Sources */,
 				FCA7045D24337979000B4454 /* UIImage+Scale.swift in Sources */,
