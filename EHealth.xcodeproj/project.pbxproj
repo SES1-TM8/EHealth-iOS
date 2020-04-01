@@ -27,6 +27,15 @@
 		FCA7045D24337979000B4454 /* UIImage+Scale.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA7045C24337979000B4454 /* UIImage+Scale.swift */; };
 		FCA7045F24337ECB000B4454 /* UIViewController+HideKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA7045E24337ECB000B4454 /* UIViewController+HideKeyboard.swift */; };
 		FCA7046124338104000B4454 /* DoctorHomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA7046024338104000B4454 /* DoctorHomeController.swift */; };
+		FCE0C1BA243494B800D6206C /* AppointmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE0C1B9243494B800D6206C /* AppointmentCell.swift */; };
+		FCE0C1BC2434951C00D6206C /* InitialsCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE0C1BB2434951C00D6206C /* InitialsCircle.swift */; };
+		FCE0C1BE243499FB00D6206C /* Patient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE0C1BD243499FB00D6206C /* Patient.swift */; };
+		FCE0C1C024349A5E00D6206C /* Doctor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE0C1BF24349A5E00D6206C /* Doctor.swift */; };
+		FCE0C1C224349ADD00D6206C /* Appointment.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE0C1C124349ADD00D6206C /* Appointment.swift */; };
+		FCE0C1C424349CE500D6206C /* DoctorTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE0C1C324349CE500D6206C /* DoctorTabController.swift */; };
+		FCE0C1C62434A29B00D6206C /* DoctorAppointmentListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE0C1C52434A29B00D6206C /* DoctorAppointmentListController.swift */; };
+		FCE0C1CA2434AC1D00D6206C /* DoctorPatientListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE0C1C92434AC1D00D6206C /* DoctorPatientListController.swift */; };
+		FCE0C1CC2434AFEF00D6206C /* PatientCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE0C1CB2434AFEF00D6206C /* PatientCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +77,15 @@
 		FCA7045E24337ECB000B4454 /* UIViewController+HideKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+HideKeyboard.swift"; sourceTree = "<group>"; };
 		FCA7046024338104000B4454 /* DoctorHomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoctorHomeController.swift; sourceTree = "<group>"; };
 		FCA7EC38B63FA96F376A0151 /* Pods_EHealthTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EHealthTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FCE0C1B9243494B800D6206C /* AppointmentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppointmentCell.swift; sourceTree = "<group>"; };
+		FCE0C1BB2434951C00D6206C /* InitialsCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialsCircle.swift; sourceTree = "<group>"; };
+		FCE0C1BD243499FB00D6206C /* Patient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Patient.swift; sourceTree = "<group>"; };
+		FCE0C1BF24349A5E00D6206C /* Doctor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Doctor.swift; sourceTree = "<group>"; };
+		FCE0C1C124349ADD00D6206C /* Appointment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Appointment.swift; sourceTree = "<group>"; };
+		FCE0C1C324349CE500D6206C /* DoctorTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoctorTabController.swift; sourceTree = "<group>"; };
+		FCE0C1C52434A29B00D6206C /* DoctorAppointmentListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoctorAppointmentListController.swift; sourceTree = "<group>"; };
+		FCE0C1C92434AC1D00D6206C /* DoctorPatientListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoctorPatientListController.swift; sourceTree = "<group>"; };
+		FCE0C1CB2434AFEF00D6206C /* PatientCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,8 +187,8 @@
 		FCA704442433658D000B4454 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				FCE0C1C82434AC0900D6206C /* Doctor */,
 				FCA7044524336651000B4454 /* LoginController.swift */,
-				FCA7046024338104000B4454 /* DoctorHomeController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -180,6 +198,9 @@
 			children = (
 				FCA7044B24336918000B4454 /* BaseUI.swift */,
 				FCA7045A2433719E000B4454 /* UnderlinedField.swift */,
+				FCE0C1B9243494B800D6206C /* AppointmentCell.swift */,
+				FCE0C1BB2434951C00D6206C /* InitialsCircle.swift */,
+				FCE0C1CB2434AFEF00D6206C /* PatientCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -187,6 +208,9 @@
 		FCA70448243368F3000B4454 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				FCE0C1BD243499FB00D6206C /* Patient.swift */,
+				FCE0C1BF24349A5E00D6206C /* Doctor.swift */,
+				FCE0C1C124349ADD00D6206C /* Appointment.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -218,6 +242,17 @@
 				FCA7045324336D20000B4454 /* Oswald-SemiBold.ttf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		FCE0C1C82434AC0900D6206C /* Doctor */ = {
+			isa = PBXGroup;
+			children = (
+				FCE0C1C324349CE500D6206C /* DoctorTabController.swift */,
+				FCA7046024338104000B4454 /* DoctorHomeController.swift */,
+				FCE0C1C52434A29B00D6206C /* DoctorAppointmentListController.swift */,
+				FCE0C1C92434AC1D00D6206C /* DoctorPatientListController.swift */,
+			);
+			name = Doctor;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -394,14 +429,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FCE0C1C224349ADD00D6206C /* Appointment.swift in Sources */,
+				FCE0C1BC2434951C00D6206C /* InitialsCircle.swift in Sources */,
+				FCE0C1C424349CE500D6206C /* DoctorTabController.swift in Sources */,
 				FCA7044C24336918000B4454 /* BaseUI.swift in Sources */,
+				FCE0C1CA2434AC1D00D6206C /* DoctorPatientListController.swift in Sources */,
+				FCE0C1C024349A5E00D6206C /* Doctor.swift in Sources */,
 				FCA704222433651C000B4454 /* AppDelegate.swift in Sources */,
 				FCA7044624336651000B4454 /* LoginController.swift in Sources */,
 				FCA7045F24337ECB000B4454 /* UIViewController+HideKeyboard.swift in Sources */,
 				FCA704242433651C000B4454 /* SceneDelegate.swift in Sources */,
+				FCE0C1C62434A29B00D6206C /* DoctorAppointmentListController.swift in Sources */,
 				FCA7046124338104000B4454 /* DoctorHomeController.swift in Sources */,
 				FCA7045B2433719E000B4454 /* UnderlinedField.swift in Sources */,
+				FCE0C1CC2434AFEF00D6206C /* PatientCell.swift in Sources */,
+				FCE0C1BA243494B800D6206C /* AppointmentCell.swift in Sources */,
 				FCA7045D24337979000B4454 /* UIImage+Scale.swift in Sources */,
+				FCE0C1BE243499FB00D6206C /* Patient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -162,7 +162,7 @@ class LoginController: UIViewController {
         
         // TODO: Send to API
         
-        let doctorVC = DoctorHomeController()
+        let doctorVC = DoctorTabController(doctor: Doctor(id: 0, name: "Jon McLean", phoneNumber: "0435882119", email: "join@mclean.one", beginTime: 8, endTime: 18))
         
         self.navigationController?.pushViewController(doctorVC, animated: true)
     }
