@@ -32,6 +32,14 @@ class DoctorPatientMedicationsController: UIViewController, UITableViewDelegate,
         return button
     }()
     
+    var addButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "add"), for: .normal)
+        button.addTarget(self, action: #selector(add), for: .touchUpInside)
+        button.tintColor = UIColor.black
+        return button
+    }()
+    
     var patientLabel: UILabel = {
         let label = UILabel()
         
@@ -68,6 +76,7 @@ class DoctorPatientMedicationsController: UIViewController, UITableViewDelegate,
         
         
         self.view.addSubview(backButton)
+        self.view.addSubview(addButton)
         self.view.addSubview(patientLabel)
         self.view.addSubview(tableView)
     }
@@ -86,6 +95,11 @@ class DoctorPatientMedicationsController: UIViewController, UITableViewDelegate,
             make.top.equalTo(self.view).offset(Dimensions.Padding.extraLarge * 3)
         }
         
+        addButton.snp.makeConstraints { (make) in
+            make.right.equalTo(self.view).offset(-Dimensions.Padding.extraLarge)
+            make.top.equalTo(self.view).offset(Dimensions.Padding.extraLarge * 3)
+        }
+        
         patientLabel.snp.makeConstraints { (make) in
             make.left.equalTo(self.backButton)
             make.top.equalTo(self.backButton.snp.bottom).offset(Dimensions.Padding.extraLarge)
@@ -99,6 +113,12 @@ class DoctorPatientMedicationsController: UIViewController, UITableViewDelegate,
     
     @objc func back() {
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func add() {
+        let vc = DoctorAddMedicationController()
+        vc.modalPresentationStyle = .formSheet
+        self.present(vc, animated: true, completion: nil)
     }
     
     // MARK: - UITableView Delegate/DataSource Methods
