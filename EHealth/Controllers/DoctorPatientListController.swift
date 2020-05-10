@@ -17,8 +17,18 @@ class DoctorPatientListController: UIViewController, UITableViewDelegate, UITabl
     var patients: [Patient] = [] {
         didSet {
             self.tableView.reloadData()
+            titleLabel.text = "Patients (\(patients.count))"
         }
     }
+    
+    let headerView = UIView()
+    
+    var titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "Oswald-SemiBold", size: 42)
+        label.text = "Patients"
+        return label
+    }()
     
     var tableView = UITableView()
     
@@ -38,6 +48,9 @@ class DoctorPatientListController: UIViewController, UITableViewDelegate, UITabl
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(PatientCell.self, forCellReuseIdentifier: DoctorPatientListController.cellId)
+        tableView.tableHeaderView = headerView
+        
+        self.headerView.addSubview(titleLabel)
         
         self.view.addSubview(tableView)
     }
@@ -51,6 +64,22 @@ class DoctorPatientListController: UIViewController, UITableViewDelegate, UITabl
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
+        
+        if let header = tableView.tableHeaderView {
+            let newSize = header.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
+            header.frame.size.height = newSize.height
+        }
+        
+        headerView.snp.makeConstraints { (make) in
+            make.left.right.equalTo(self.view)
+            make.height.equalTo(85)
+        }
+        
+        titleLabel.snp.makeConstraints { (make) in
+            make.left.equalTo(self.headerView).offset(Dimensions.Padding.large)
+            make.right.equalTo(self.headerView).offset(-Dimensions.Padding.large)
+            make.centerY.equalTo(self.headerView).offset(Dimensions.Padding.medium)
+        }
         
         tableView.snp.makeConstraints { (make) in
             make.edges.equalTo(self.view)
