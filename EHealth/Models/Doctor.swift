@@ -26,3 +26,37 @@ struct Doctor: Decodable {
     }
     
 }
+
+struct DoctorAPI: Codable {
+    var doctorId: Int
+    var registration: String
+    var userId: Int
+    var verified: Bool
+    
+    enum CodingKeys: String, CodingKey {
+        case doctorId
+        case registration = "registraitonNumber"
+        case userId
+        case verified
+    }
+}
+
+extension DoctorAPI {
+    
+    static func save(doctor: DoctorAPI){
+        let defaults = UserDefaults.standard
+        
+        defaults.set(try? JSONEncoder().encode(doctor), forKey: "ehealth_doctor")
+    }
+    
+    static func load() -> DoctorAPI? {
+        let defaults = UserDefaults.standard
+        
+        if let encoded = defaults.data(forKey: "ehealth_doctor") {
+            return try? JSONDecoder().decode(DoctorAPI.self, from:encoded)
+        }
+        
+        return nil
+    }
+    
+}

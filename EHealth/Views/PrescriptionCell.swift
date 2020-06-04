@@ -58,7 +58,6 @@ class PrescriptionCell: UITableViewCell {
         
         self.contentView.addSubview(medicationLabel)
         self.contentView.addSubview(takenLabel)
-        self.contentView.addSubview(dateLabel)
         self.contentView.addSubview(instructionsLabel)
     }
     
@@ -69,12 +68,6 @@ class PrescriptionCell: UITableViewCell {
             make.top.equalTo(self.contentView).offset(Dimensions.Padding.medium)
         }
         
-        dateLabel.snp.makeConstraints { (make) in
-            make.left.equalTo(self.medicationLabel.snp.right).offset(Dimensions.Padding.medium)
-            make.right.equalTo(self.contentView).offset(-Dimensions.Padding.large)
-            make.top.equalTo(self.medicationLabel)
-        }
-        
         instructionsLabel.snp.makeConstraints { (make) in
             make.left.equalTo(self.medicationLabel)
             make.top.equalTo(self.medicationLabel.snp.bottom).offset(Dimensions.Padding.medium)
@@ -82,20 +75,16 @@ class PrescriptionCell: UITableViewCell {
         
         takenLabel.snp.makeConstraints { (make) in
             make.left.equalTo(self.instructionsLabel.snp.right).offset(Dimensions.Padding.medium)
-            make.right.equalTo(self.dateLabel)
-            make.top.equalTo(self.instructionsLabel)
+            make.right.equalTo(self.contentView).offset(-Dimensions.Padding.large)
+            make.top.equalTo(self.medicationLabel)
+            make.bottom.equalTo(self.contentView).offset(-Dimensions.Padding.medium)
         }
     }
     
-    func setPrescription(_ prescription: Prescription) {
-        self.medicationLabel.text = "\(prescription.dosage.removeDecimal())mg \(prescription.medication.name)"
-        
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd/MM/yyyy"
-        let date = formatter.string(from: Date(timeIntervalSince1970: Double(prescription.prescriptionDate)))
-        self.dateLabel.text = date
-        self.instructionsLabel.text = "\(prescription.amount) per \(prescription.perUnit)"
-        self.takenLabel.text = "Taken \(prescription.medication.consumption.description())"
+    func setPrescription(_ prescription: Prescription, medication: Medication) {
+        self.medicationLabel.text = "\(medication.dosage.removeDecimal())\(medication.dosageUnit) \(medication.name)"
+        self.instructionsLabel.text = "\(prescription.frequency) per \(prescription.frequencyUnit)"
+        self.takenLabel.text = "Taken \(ConsumptionMethod(rawValue: medication.inputType)?.description() ?? "orally")"
     }
     
 }

@@ -10,9 +10,11 @@ import UIKit
 
 class DoctorTabController: UITabBarController {
     
-    var doctor: Doctor
+    var user: User
+    var doctor: DoctorAPI
     
-    init(doctor: Doctor) {
+    init(user: User, doctor: DoctorAPI) {
+        self.user = user
         self.doctor = doctor
         super.init(nibName: nil, bundle: nil)
     }
@@ -26,17 +28,22 @@ class DoctorTabController: UITabBarController {
         
         self.tabBar.barTintColor = Theme.background
         
-        let homeController = DoctorHomeController(doctor: self.doctor)
+        let homeController = DoctorHomeController(user: user, doctor: doctor)
         homeController.tabBarItem = UITabBarItem(title: "Home", image: UIImage(named: "home")!, tag: 1)
         
-        let appointmentController = DoctorAppointmentListControllerController(doctor: self.doctor)
+        let appointmentController = DoctorAppointmentListControllerController(user: user, doctor: self.doctor)
         appointmentController.tabBarItem = UITabBarItem(title: "Appointments", image: UIImage(named: "appointment"), tag: 2)
         
-        let patientController = DoctorPatientListController(doctor: self.doctor)
+        let patientController = DoctorPatientListController(user: user, doctor: self.doctor)
         patientController.tabBarItem = UITabBarItem(title: "Patients", image: UIImage(named: "person"), tag: 3)
         
+        let urgentController = DoctorUrgentCaseListController(user: user, doctor: doctor)
+        urgentController.tabBarItem = UITabBarItem(title: "Urgent Cases", image: UIImage(named: "urgent_case_scalable"), tag: 4)
         
-        self.viewControllers = [homeController, appointmentController, patientController]
+        let otherController = OtherController()
+        otherController.tabBarItem = UITabBarItem(title: "Other", image: UIImage(named: "more"), tag: 5)
+        
+        self.viewControllers = [homeController, appointmentController, patientController, urgentController, otherController]
     }
     
 }

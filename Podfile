@@ -9,6 +9,10 @@ target 'EHealth' do
   pod 'SwiftHEXColors'
   pod 'SnapKit'
   pod 'Alamofire'
+  pod 'MessageKit'
+  pod 'Firebase/Analytics'
+  pod 'Firebase/Firestore'
+  pod 'Firebase/Auth'
 
   target 'EHealthTests' do
     inherit! :search_paths

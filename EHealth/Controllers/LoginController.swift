@@ -7,8 +7,12 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseAuth
 
 class LoginController: UIViewController {
+    
+    let api = API.shared
     
     var headerImage: UIImageView = {
         let imageView = UIImageView()
@@ -91,6 +95,16 @@ class LoginController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if let session = Session.load() {
+            if let user = User.load() {
+                if let patient = Patient.load() {
+                    self.navigationController?.pushViewController(PatientTabController(patient: patient, user: user), animated: true)
+                }else if let doctor = DoctorAPI.load() {
+                    self.navigationController?.pushViewController(DoctorTabController(user: user, doctor: doctor), animated: true)
+                }
+            }
+        }
+        
         self.view.backgroundColor = Theme.background
         
         self.hideKeyboardOnTapAround()
@@ -158,17 +172,72 @@ class LoginController: UIViewController {
     // MARK: - Button Methods
     @objc func signIn() { // TODO: Add Errors
         guard let email = self.emailField.text, isValidEmail(email) else { return }
-        guard let password = self.passwordField.text, password.count >= 8 else { return }
+        guard let password = self.passwordField.text else { return }
         
-        // TODO: Send to API
-        
-        let doctorVC = DoctorTabController(doctor: Doctor(id: 0, name: "Jon McLean", phoneNumber: "0435882119", email: "join@mclean.one", beginTime: 8, endTime: 18))
-        
-        self.navigationController?.pushViewController(doctorVC, animated: true)
+        api.login(email: emailField.text!, password: passwordField.text!, success: { (response) in
+            
+            if let model = try? JSONDecoder().decode(Session.self, from: response) {
+                print("success")
+                
+                self.api.getUser(userId: model.userId, success: { (userResponse) in
+                    
+                    if let user = try? JSONDecoder().decode(User.self, from: userResponse) {
+                        print("success, got user")
+                        self.api.getPatient(userId: model.userId, success: { (patientResponse) in
+                            print("success, got patient")
+                            if let patient = try? JSONDecoder().decode(Patient.self, from: patientResponse) {
+                                Auth.auth().signIn(withCustomToken: model.firebase) { (result, error) in
+                                    if error != nil {
+                                        print(error?.localizedDescription)
+                                    }else {
+                                        Session.save(session: model)
+                                        User.save(user: user)
+                                        Patient.save(patient: patient)
+                                        let vc = PatientTabController(patient: patient, user: user)
+                                        self.navigationController?.pushViewController(vc, animated: true)
+                                    }
+                                }
+                            }
+                        }) { (error) in
+                            print("failed to get patient, will try getting doctor")
+                            
+                            self.api.getDoctorFromId(userId: model.userId, success: { (docResponse) in
+                                if let doctor = try? JSONDecoder().decode(DoctorAPI.self, from: docResponse) {
+                                    Auth.auth().signIn(withCustomToken: model.firebase) { (result, error) in
+                                        if error != nil {
+                                            print(error?.localizedDescription)
+                                        }else {
+                                            Session.save(session: model)
+                                            User.save(user: user)
+                                            DoctorAPI.save(doctor: doctor)
+                                            let vc = DoctorTabController(user: user, doctor: doctor)
+                                            self.navigationController?.pushViewController(vc, animated: true)
+                                        }
+                                    }
+                                }
+                            }) { (error) in
+                                print("failed to get doctor")
+                            }
+                        }
+                        
+                        
+                        
+                    }
+                    
+                }) { (error) in
+                    print("failed to get user")
+                }
+                
+                
+            }
+            
+        }) { (error) in
+            print("failure")
+        }
     }
     
     @objc func presentSignUp() {
-        
+        self.navigationController?.pushViewController(RegistrationController(), animated: true)
     }
     
     // MARK: - Other Methods

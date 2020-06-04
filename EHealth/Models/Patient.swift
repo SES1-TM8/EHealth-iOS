@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Patient: Decodable {
+struct PatientModel: Decodable {
     var id: Int
     var name: String
     var phoneNumber: String
@@ -32,7 +32,7 @@ struct Patient: Decodable {
     }
 }
 
-enum ConcessionType: String {
+enum ConcessionType: String, CaseIterable {
     case pensioner = "pensioner"
     case student = "student"
     case veteran = "veteran"
@@ -55,7 +55,7 @@ enum ConcessionType: String {
     }
 }
 
-extension Patient {
+extension PatientModel {
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         id = try values.decode(Int.self, forKey: .id)

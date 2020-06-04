@@ -13,7 +13,18 @@ class DoctorHomeController: UIViewController, UITableViewDelegate, UITableViewDa
     static let cellId = "UpcomingCell"
     static let cellHeight: CGFloat = 90
     
-    var doctor: Doctor
+    let api = API.shared
+    
+    var user: User
+    var doctor: DoctorAPI
+    var session: Session?
+    
+    init(user: User, doctor: DoctorAPI) {
+        self.user = user
+        self.doctor = doctor
+        super.init(nibName: nil, bundle: nil)
+    }
+    
     var appointments: [Appointment] = [] {
         didSet {
             self.tableView.reloadData()
@@ -57,11 +68,6 @@ class DoctorHomeController: UIViewController, UITableViewDelegate, UITableViewDa
         return button
     }()
     
-    init(doctor: Doctor) {
-        self.doctor = doctor
-        super.init(nibName: nil, bundle: nil)
-    }
-    
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
     
     
@@ -70,8 +76,14 @@ class DoctorHomeController: UIViewController, UITableViewDelegate, UITableViewDa
         
         self.view.backgroundColor = Theme.background
         
+        if let s = Session.load() {
+            self.session = s
+        }else {
+            self.navigationController?.pushViewController(LoginController(), animated: true)
+        }
+        
         greetingLabel.text = "Good \(timeBasedGreeting()),"
-        nameLabel.text = "Dr. \(doctor.name.split(separator: " ").last ?? "")"
+        nameLabel.text = "Dr. \(user.firstName) \(user.lastName)"
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -90,8 +102,7 @@ class DoctorHomeController: UIViewController, UITableViewDelegate, UITableViewDa
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: true)
-        
-        self.appointments = [Appointment(patient: Patient(id: 0, name: "Joy Liu", phoneNumber: "999", email: "test@test.com", address: "", dateOfBirth: "12/05/2000", medicareNumber: "AAAAAAAAAA", concessionType: .generic, concessionCardNumber: "AAAAAA"), doctor: self.doctor, reason: nil, time: 1585735503, imageUrls: nil), Appointment(patient: Patient(id: 1, name: "Shane Rodrigues", phoneNumber: "999", email: "test@test.com", address: "", dateOfBirth: "12/03/2000", medicareNumber: "AAAAAA", concessionType: .none, concessionCardNumber: ""), doctor: self.doctor, reason: nil, time: 1585739103, imageUrls: nil), Appointment(patient: Patient(id: 2, name: "Ahmed Kursheed", phoneNumber: "999", email: "test@test.com", address: "", dateOfBirth: "31/03/1999", medicareNumber: "AAAAAAAA", concessionType: .none, concessionCardNumber: ""), doctor: self.doctor, reason: nil, time: 1585739103, imageUrls: nil), Appointment(patient: Patient(id: 3, name: "Zihao Cui", phoneNumber: "999", email: "test@test.com", address: "", dateOfBirth: "21/01/1997", medicareNumber: "AAAAAAAAAA", concessionType: .none, concessionCardNumber: ""), doctor: self.doctor, reason: nil, time: 1585739103, imageUrls: nil), Appointment(patient: Patient(id: 4, name: "Jon McLean", phoneNumber: "0435882119", email: "jon@mclean.one", address: "30 Letters Street, Evatt ACT 2617", dateOfBirth: "27/10/1999", medicareNumber: "AAAAAAAAAAA", concessionType: .none, concessionCardNumber: ""), doctor: self.doctor, reason: nil, time: 1585739103, imageUrls: nil)]
+        loadAppointments()
     }
     
     override func viewWillLayoutSubviews() {
@@ -138,6 +149,18 @@ class DoctorHomeController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
+    func loadAppointments() {
+        api.getAppointmentsForDayForDoctor(token: session!.token, date: Date(), success: { (response ) in
+            print("run")
+            if let model = try? JSONDecoder().decode([Appointment].self, from: response) {
+                print("got")
+                self.appointments = model
+            }
+        }) { (error) in
+            print("failure to get appointments for day")
+        }
+    }
+    
     func timeBasedGreeting() -> String {
         let date = Date()
         let calendar = Calendar.current
@@ -163,10 +186,16 @@ class DoctorHomeController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if appointments.count <= 4 {
+        if appointments.count == 0 {
+            self.infoLabel.text = "You have no appointments today"
+            self.viewMoreButton.isHidden = true
+            return 0
+        }else if appointments.count <= 4 {
+            self.infoLabel.text = "You have the following upcoming appointments today"
             self.viewMoreButton.isHidden = true
             return appointments.count
         }else {
+            self.infoLabel.text = "You have the following upcoming appointments today"
             self.viewMoreButton.isHidden = false
             return 4
         }
@@ -183,9 +212,25 @@ class DoctorHomeController: UIViewController, UITableViewDelegate, UITableViewDa
         
         let app = appointments[indexPath.row]
         
-        cell.patientName = app.patient.name
-        cell.initials = app.patient.name.initials()
-        cell.setTime(date: Date(timeIntervalSince1970: app.time))
+        cell.initials = "PT"
+        cell.patientName = "Patient"
+        
+        api.getPatientForId(id: app.patientId, success: { (response) in
+            if let model = try? JSONDecoder().decode(Patient.self, from: response) {
+                self.api.getUser(userId: model.userId, success: { (userResponse) in
+                    if let userModel = try? JSONDecoder().decode(User.self, from: userResponse) {
+                        cell.initials = "\(userModel.firstName) \(userModel.lastName)".initials()
+                        cell.patientName = "\(userModel.firstName) \(userModel.lastName)"
+                    }
+                }) { (error) in
+                    print("failed to get user")
+                }
+            }
+        }) { (error) in
+            print("failure to get patient")
+        }
+        
+        cell.setTime(date: Date(timeIntervalSince1970: Double(app.start / 1000)))
         
         return cell
     }

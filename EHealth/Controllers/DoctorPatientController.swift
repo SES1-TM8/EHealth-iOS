@@ -10,7 +10,10 @@ import UIKit
 
 class DoctorPatientController: UIViewController {
     
-    var doctor: Doctor
+    let api = API.shared
+    
+    var user: User
+    var doctor: DoctorAPI
     var patient: Patient
     
     var backButton: UIButton = {
@@ -55,11 +58,11 @@ class DoctorPatientController: UIViewController {
     
     var emailInfoView = InfoView()
     var phoneInfoView = InfoView()
-    var addressInfoView = InfoView()
     var concessionTypeInfoView = InfoView()
     var concessionNumberInfoView = InfoView()
     
-    init(doctor: Doctor, patient: Patient) {
+    init(user: User, doctor: DoctorAPI, patient: Patient) {
+        self.user = user
         self.doctor = doctor
         self.patient = patient
         super.init(nibName: nil, bundle: nil)
@@ -72,20 +75,25 @@ class DoctorPatientController: UIViewController {
         
         self.view.backgroundColor = Theme.background
         
-        patientLabel.text = self.patient.name
-        birthLabel.text = "DOB \(self.patient.dateOfBirth)"
-        medicareLabel.text = self.patient.medicareNumber
+        api.getUser(userId: patient.userId, success: { (response) in
+            if let model = try? JSONDecoder().decode(User.self, from: response) {
+                self.patientLabel.text = model.firstName + " " + model.lastName
+                self.birthLabel.text = "DOB \(model.dob)"
+                self.emailInfoView.content = model.email
+                self.phoneInfoView.content = model.phoneNumber
+            }
+        }) { (error) in
+            print("failed to get user")
+            self.navigationController?.popViewController(animated: true)
+        }
+        
         emailInfoView.title = "Email"
-        emailInfoView.content = self.patient.email
         phoneInfoView.title = "Phone Number"
-        phoneInfoView.content = self.patient.phoneNumber
-        addressInfoView.title = "Address"
-        addressInfoView.content = self.patient.address
         concessionTypeInfoView.title = "Concession Type"
         concessionTypeInfoView.content = self.patient.concessionType.displayName()
         
         concessionNumberInfoView.title = "Concession Card Number"
-        concessionNumberInfoView.content = self.patient.concessionCardNumber
+        concessionNumberInfoView.content = self.patient.concessionNumber
         concessionNumberInfoView.isHidden = self.patient.concessionType == .none
         
         
@@ -95,14 +103,13 @@ class DoctorPatientController: UIViewController {
         self.view.addSubview(medicareLabel)
         self.view.addSubview(emailInfoView)
         self.view.addSubview(phoneInfoView)
-        self.view.addSubview(addressInfoView)
         self.view.addSubview(concessionTypeInfoView)
         self.view.addSubview(concessionNumberInfoView)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
     override func viewWillLayoutSubviews() {
@@ -125,7 +132,7 @@ class DoctorPatientController: UIViewController {
         medicareLabel.snp.makeConstraints { (make) in
             make.left.equalTo(self.birthLabel.snp.right).offset(Dimensions.Padding.large)
             make.right.equalTo(self.view).offset(-Dimensions.Padding.extraLarge)
-            make.top.equalTo(self.birthLabel)
+            make.top.equalTo(self.birthLabel.snp.bottom).offset(Dimensions.Padding.large)
         }
         
         emailInfoView.snp.makeConstraints { (make) in
@@ -139,14 +146,9 @@ class DoctorPatientController: UIViewController {
             make.top.equalTo(self.emailInfoView.snp.bottom).offset(Dimensions.Padding.large)
         }
         
-        addressInfoView.snp.makeConstraints { (make) in
+        concessionTypeInfoView.snp.makeConstraints { (make) in
             make.left.right.equalTo(self.phoneInfoView)
             make.top.equalTo(self.phoneInfoView.snp.bottom).offset(Dimensions.Padding.large)
-        }
-        
-        concessionTypeInfoView.snp.makeConstraints { (make) in
-            make.left.right.equalTo(self.addressInfoView)
-            make.top.equalTo(self.addressInfoView.snp.bottom).offset(Dimensions.Padding.large)
         }
         
         if self.patient.concessionType != .none {

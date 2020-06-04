@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct Medication: Decodable {
+struct MedicationModel: Decodable {
     var id: Int
     var name: String
     var consumption: ConsumptionMethod
@@ -20,7 +20,7 @@ struct Medication: Decodable {
     }
 }
 
-enum ConsumptionMethod: String {
+enum ConsumptionMethod: String, CaseIterable {
     case oral = "oral"
     case spray = "spray"
     case iv = "iv"
@@ -53,11 +53,29 @@ enum ConsumptionMethod: String {
     }
 }
 
-extension Medication {
+extension MedicationModel {
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         id = try values.decode(Int.self, forKey: .id)
         name = try values.decode(String.self, forKey: .name)
         consumption = ConsumptionMethod(rawValue: try values.decode(String.self, forKey: .consumption)) ?? .oral
+    }
+}
+
+struct Medication: Decodable {
+    var id: Int
+    var name: String
+    var inputType: String
+    var dosage: Double
+    var dosageUnit: String
+    var scheduleListing: String
+    
+    enum CodingKeys: String, CodingKey {
+        case id = "medicationId"
+        case name
+        case inputType
+        case dosage
+        case dosageUnit
+        case scheduleListing
     }
 }

@@ -13,7 +13,10 @@ class DoctorPatientMedicationsController: UIViewController, UITableViewDelegate,
     static let cellId = "PrescriptionCell"
     static let cellHeight: CGFloat = 80
     
-    var doctor: Doctor
+    let api = API.shared
+    
+    var user: User
+    var doctor: DoctorAPI
     var patient: Patient
     
     var prescriptions: [Prescription] = [] {
@@ -21,6 +24,8 @@ class DoctorPatientMedicationsController: UIViewController, UITableViewDelegate,
             self.tableView.reloadData()
         }
     }
+    
+    var medications: [Int : Medication] = [:]
     
     var backButton: UIButton = {
         let button = UIButton()
@@ -53,7 +58,8 @@ class DoctorPatientMedicationsController: UIViewController, UITableViewDelegate,
     
     var tableView = UITableView()
     
-    init(doctor: Doctor, patient: Patient) {
+    init(user: User, doctor: DoctorAPI, patient: Patient) {
+        self.user = user
         self.doctor = doctor
         self.patient = patient
         super.init(nibName: nil, bundle: nil)
@@ -72,7 +78,14 @@ class DoctorPatientMedicationsController: UIViewController, UITableViewDelegate,
         tableView.dataSource = self
         tableView.register(PrescriptionCell.self, forCellReuseIdentifier: DoctorPatientMedicationsController.cellId)
         
-        patientLabel.text = self.patient.name
+        api.getUser(userId: patient.userId, success: { (response) in
+            if let model = try? JSONDecoder().decode(User.self, from: response) {
+                self.patientLabel.text = model.firstName + " " + model.lastName
+            }
+        }) { (error) in
+            print("failed to get user")
+            self.navigationController?.popViewController(animated: true)
+        }
         
         
         self.view.addSubview(backButton)
@@ -83,9 +96,8 @@ class DoctorPatientMedicationsController: UIViewController, UITableViewDelegate,
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        self.prescriptions = [Prescription(id: 0, prescribedBy: self.doctor, prescribedTo: self.patient, medication: Medication(id: 0, name: "Prednisolone", consumption: .oral), dosage: 25.0, amount: 3, perUnit: .day, prescriptionDate: 1585753413)]
-        
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
+        loadPrescriptions()
     }
     
     override func viewWillLayoutSubviews() {
@@ -111,14 +123,40 @@ class DoctorPatientMedicationsController: UIViewController, UITableViewDelegate,
         }
     }
     
+    func loadPrescriptions() {
+        api.getPrescriptions(patientId: self.patient.id, success: { (response) in
+            if let model = try? JSONDecoder().decode([Prescription].self, from: response) {
+                self.prescriptions = model
+                self.loadMedications()
+            }
+        }) { (error) in
+            print("Failure to get prescriptions")
+        }
+    }
+    
+    func loadMedications() {
+        for i in self.prescriptions {
+            api.getMedication(medicationId: i.medicationId, success: { (response) in
+                if let model = try? JSONDecoder().decode(Medication.self, from: response) {
+                    self.medications.updateValue(model, forKey: i.id)
+                    self.tableView.reloadData()
+                }
+            }) { (error) in
+                print("Failed to medication")
+            }
+        }
+    }
+    
     @objc func back() {
         self.navigationController?.popViewController(animated: true)
     }
     
     @objc func add() {
-        let vc = DoctorAddMedicationController()
+        let vc = DoctorAddMedicationController(user: self.user, doctor: self.doctor, patient: self.patient)
         vc.modalPresentationStyle = .formSheet
-        self.present(vc, animated: true, completion: nil)
+        self.present(vc, animated: true) {
+            //self.tableView.reloadData()
+        }
     }
     
     // MARK: - UITableView Delegate/DataSource Methods
@@ -139,7 +177,7 @@ class DoctorPatientMedicationsController: UIViewController, UITableViewDelegate,
             cell = PrescriptionCell(reuseId: DoctorPatientMedicationsController.cellId)
         }
         
-        cell.setPrescription(self.prescriptions[indexPath.row])
+        cell.setPrescription(self.prescriptions[indexPath.row], medication: self.medications[prescriptions[indexPath.row].id] ?? Medication(id: 0, name: "Placeholder", inputType: "oral", dosage: 2, dosageUnit: "mg", scheduleListing: "2"))
         
         return cell
     }

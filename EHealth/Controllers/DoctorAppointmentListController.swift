@@ -12,25 +12,21 @@ class DoctorAppointmentListControllerController: UIViewController, UITableViewDe
     
     static let cellId = "AppointmentCell"
     
-    var doctor: Doctor
+    let api = API.shared
+    
+    var user: User
+    var doctor: DoctorAPI
     var appointments: [Appointment] = [] {
         didSet {
             self.tableView.reloadData()
         }
     }
-    
-    let headerView = UIView()
-    
-    var titleLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont(name: "Oswald-SemiBold", size: 42)
-        label.text = "Appointments"
-        return label
-    }()
+    var session: Session?
     
     var tableView = UITableView()
     
-    init(doctor: Doctor) {
+    init(user: User, doctor: DoctorAPI) {
+        self.user = user
         self.doctor = doctor
         super.init(nibName: nil, bundle: nil)
     }
@@ -38,49 +34,49 @@ class DoctorAppointmentListControllerController: UIViewController, UITableViewDe
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
+        
+        if let s = Session.load() {
+            self.session = s
+        }else {
+            self.navigationController?.pushViewController(LoginController(), animated: true)
+        }
+        
         self.view.backgroundColor = Theme.background
         
         tableView.backgroundColor = Theme.background
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(AppointmentCell.self, forCellReuseIdentifier: DoctorAppointmentListControllerController.cellId)
-        tableView.tableHeaderView = headerView
-        
-        self.headerView.addSubview(titleLabel)
         
         self.view.addSubview(tableView)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+        //self.navigationItem.setRightBarButton(UIBarButtonItem(image: UIImage(named: "add"), style: .plain, target: self, action: #selector(createAppointment)), animated: true)
         
-        self.appointments = [Appointment(patient: Patient(id: 0, name: "Joy Liu", phoneNumber: "999", email: "test@test.com", address: "", dateOfBirth: "12/05/2000", medicareNumber: "AAAAAAAAAA", concessionType: .generic, concessionCardNumber: "AAAAAA"), doctor: self.doctor, reason: nil, time: 1585735503, imageUrls: nil), Appointment(patient: Patient(id: 1, name: "Shane Rodrigues", phoneNumber: "999", email: "test@test.com", address: "", dateOfBirth: "12/03/2000", medicareNumber: "AAAAAA", concessionType: .none, concessionCardNumber: ""), doctor: self.doctor, reason: nil, time: 1585739103, imageUrls: nil), Appointment(patient: Patient(id: 2, name: "Ahmed Kursheed", phoneNumber: "999", email: "test@test.com", address: "", dateOfBirth: "31/03/1999", medicareNumber: "AAAAAAAA", concessionType: .none, concessionCardNumber: ""), doctor: self.doctor, reason: nil, time: 1585739103, imageUrls: nil), Appointment(patient: Patient(id: 3, name: "Zihao Cui", phoneNumber: "999", email: "test@test.com", address: "", dateOfBirth: "21/01/1997", medicareNumber: "AAAAAAAAAA", concessionType: .none, concessionCardNumber: ""), doctor: self.doctor, reason: nil, time: 1585739103, imageUrls: nil), Appointment(patient: Patient(id: 4, name: "Jon McLean", phoneNumber: "0435882119", email: "jon@mclean.one", address: "30 Letters Street, Evatt ACT 2617", dateOfBirth: "27/10/1999", medicareNumber: "AAAAAAAAAAA", concessionType: .none, concessionCardNumber: ""), doctor: self.doctor, reason: nil, time: 1585739103, imageUrls: nil)]
+        self.tabBarController?.navigationItem.leftBarButtonItem = UIBarButtonItem(title: nil, style: .plain, target: nil, action: nil)
         
+        self.loadAppointments()
     }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         
-        if let header = tableView.tableHeaderView {
-            let newSize = header.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
-            header.frame.size.height = newSize.height
-        }
-        
-        headerView.snp.makeConstraints { (make) in
-            make.left.right.equalTo(self.view)
-            make.height.equalTo(85)
-        }
-        
-        titleLabel.snp.makeConstraints { (make) in
-            make.left.equalTo(self.headerView).offset(Dimensions.Padding.large)
-            make.right.equalTo(self.headerView).offset(-Dimensions.Padding.large)
-            make.centerY.equalTo(self.headerView).offset(Dimensions.Padding.medium)
-        }
-        
         tableView.snp.makeConstraints { (make) in
             make.edges.equalTo(self.view)
+        }
+    }
+    
+    func loadAppointments() {
+        api.getAppointmentsForDoctor(doctorId: self.doctor.doctorId, success: { (response) in
+            if let model = try? JSONDecoder().decode([Appointment].self, from: response) {
+                self.appointments = model
+            }
+        }) { (error) in
+            print("failed to get appointments")
         }
     }
     
@@ -102,10 +98,27 @@ class DoctorAppointmentListControllerController: UIViewController, UITableViewDe
             cell = AppointmentCell(reuseId: DoctorAppointmentListControllerController.cellId)
         }
         
-        let appointment = appointments[indexPath.row]
-        cell.patientName = appointment.patient.name
-        cell.initials = appointment.patient.name.initials() ?? "#"
-        cell.setTime(date: Date(timeIntervalSince1970: appointment.time))
+        let app = appointments[indexPath.row]
+        
+        cell.initials = "PT"
+        cell.patientName = "Patient"
+        
+        api.getPatientForId(id: app.patientId, success: { (response) in
+            if let model = try? JSONDecoder().decode(Patient.self, from: response) {
+                self.api.getUser(userId: model.userId, success: { (userResponse) in
+                    if let userModel = try? JSONDecoder().decode(User.self, from: userResponse) {
+                        cell.initials = "\(userModel.firstName) \(userModel.lastName)".initials()
+                        cell.patientName = "\(userModel.firstName) \(userModel.lastName)"
+                    }
+                }) { (error) in
+                    print("failed to get user")
+                }
+            }
+        }) { (error) in
+            print("failure to get patient")
+        }
+        
+        cell.setTime(date: Date(timeIntervalSince1970: Double(app.start / 1000)))
         
         return cell
     }
@@ -116,5 +129,13 @@ class DoctorAppointmentListControllerController: UIViewController, UITableViewDe
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        
+        api.getAppointmentInfo(token: self.session!.token, appointmentId: appointments[indexPath.row].id, success: { (response) in
+            if let model = try? JSONDecoder().decode(AppointmentInformation.self, from: response) {
+                self.navigationController?.pushViewController(DoctorAppointmentController(user: self.user, doctor: self.doctor, appointment: self.appointments[indexPath.row], info: model), animated: true)
+            }
+        }) { (error) in
+            print("Failed to get info")
+        }
     }
 }

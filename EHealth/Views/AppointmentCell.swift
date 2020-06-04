@@ -97,10 +97,12 @@ class AppointmentCell: UITableViewCell {
             timeExtension = "AM"
         }
         
+        self.timeLabel.text = "\(calendar.component(.day, from: date))/\(calendar.component(.month, from: date)) at "
+        
         if minute < 10 {
-            self.timeLabel.text = "\(hour):0\(minute) \(timeExtension)"
+            self.timeLabel.text! += "\(hour):0\(minute) \(timeExtension)"
         }else {
-            self.timeLabel.text = "\(hour):\(minute) \(timeExtension)"
+            self.timeLabel.text! += "\(hour):\(minute) \(timeExtension)"
         }
     }
     

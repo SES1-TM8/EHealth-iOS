@@ -10,10 +10,12 @@ import UIKit
 
 class DoctorPatientTabController: UITabBarController {
     
-    var doctor: Doctor
+    var user: User
+    var doctor: DoctorAPI
     var patient: Patient
     
-    init(doctor: Doctor, patient: Patient) {
+    init(user: User, doctor: DoctorAPI, patient: Patient) {
+        self.user = user
         self.doctor = doctor
         self.patient = patient
         super.init(nibName: nil, bundle: nil)
@@ -28,10 +30,10 @@ class DoctorPatientTabController: UITabBarController {
         
         self.tabBar.barTintColor = Theme.background
         
-        let patientInfoController = DoctorPatientController(doctor: doctor, patient: patient)
+        let patientInfoController = DoctorPatientController(user: user, doctor: doctor, patient: patient)
         patientInfoController.tabBarItem = UITabBarItem(title: "Information", image: UIImage(named: "person"), tag: 1)
         
-        let medicationsController = DoctorPatientMedicationsController(doctor: self.doctor, patient: self.patient)
+        let medicationsController = DoctorPatientMedicationsController(user: user, doctor: self.doctor, patient: self.patient)
         medicationsController.tabBarItem = UITabBarItem(title: "Medications", image: UIImage(named: "medications"), tag: 2)
         
         self.viewControllers = [patientInfoController, medicationsController]

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>56883797064-0ej52mla6i06ci7uqso6ltbe1q170n86.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.56883797064-0ej52mla6i06ci7uqso6ltbe1q170n86</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDZnWMFBiob0Kj_2D0LXC1j4Ef_guTb88c</string>
+	<key>GCM_SENDER_ID</key>
+	<string>56883797064</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>xyz.jonmclean.EHealth</string>
+	<key>PROJECT_ID</key>
+	<string>ehealth-458e4</string>
+	<key>STORAGE_BUCKET</key>
+	<string>ehealth-458e4.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:56883797064:ios:3ac3ea127c4da88a408c7d</string>
+	<key>DATABASE_URL</key>
+	<string>https://ehealth-458e4.firebaseio.com</string>
+</dict>
+</plist>

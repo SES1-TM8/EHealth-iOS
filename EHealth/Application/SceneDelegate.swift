@@ -17,7 +17,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
-            let vc = DoctorTabController(doctor: Doctor(id: 0, name: "Jon McLean", phoneNumber: "0435882119", email: "join@mclean.one", beginTime: 8, endTime: 18))
+            // let vc = DoctorTabController(doctor: Doctor(id: 0, name: "Jon McLean", phoneNumber: "0435882119", email: "join@mclean.one", beginTime: 8, endTime: 18))
+            let vc = LoginController()
             
             let nav = UINavigationController(rootViewController: vc)
             window.rootViewController = nav
